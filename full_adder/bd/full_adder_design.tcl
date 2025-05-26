@@ -233,10 +233,10 @@ proc create_root_design { parentCell } {
 
 
   # Create ports
-  set sw [ create_bd_port -dir I sw ]
+  set sw0 [ create_bd_port -dir I sw0 ]
   set sw1 [ create_bd_port -dir I sw1 ]
-  set btn [ create_bd_port -dir I -from 0 -to 0 btn ]
   set led [ create_bd_port -dir O -from 1 -to 0 led ]
+  set btn0 [ create_bd_port -dir I btn0 ]
 
   # Create instance: processing_system7_0, and set properties
   set processing_system7_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:processing_system7:5.5 processing_system7_0 ]
@@ -786,7 +786,7 @@ proc create_root_design { parentCell } {
   connect_bd_intf_net -intf_net processing_system7_0_FIXED_IO [get_bd_intf_ports FIXED_IO] [get_bd_intf_pins processing_system7_0/FIXED_IO]
 
   # Create port connections
-  connect_bd_net -net btn_1  [get_bd_ports btn] \
+  connect_bd_net -net btn0_1  [get_bd_ports btn0] \
   [get_bd_pins full_adder_wrapper_0/cin]
   connect_bd_net -net full_adder_wrapper_0_cout  [get_bd_pins full_adder_wrapper_0/cout] \
   [get_bd_pins ilconcat_0/In1]
@@ -796,7 +796,7 @@ proc create_root_design { parentCell } {
   [get_bd_ports led]
   connect_bd_net -net sw1_1  [get_bd_ports sw1] \
   [get_bd_pins full_adder_wrapper_0/b]
-  connect_bd_net -net sw_1  [get_bd_ports sw] \
+  connect_bd_net -net sw_1  [get_bd_ports sw0] \
   [get_bd_pins full_adder_wrapper_0/a]
 
   # Create address segments
