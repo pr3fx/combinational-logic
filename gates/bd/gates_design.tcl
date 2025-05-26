@@ -138,7 +138,6 @@ set bCheckIPs 1
 if { $bCheckIPs == 1 } {
    set list_check_ips "\ 
 xilinx.com:ip:processing_system7:5.5\
-xilinx.com:ip:xlslice:1.0\
 "
 
    set list_ips_missing ""
@@ -233,8 +232,9 @@ proc create_root_design { parentCell } {
 
 
   # Create ports
-  set btn [ create_bd_port -dir I -from 1 -to 0 btn ]
   set led [ create_bd_port -dir O -from 3 -to 0 led ]
+  set btn0 [ create_bd_port -dir I btn0 ]
+  set btn1 [ create_bd_port -dir I btn1 ]
 
   # Create instance: processing_system7_0, and set properties
   set processing_system7_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:processing_system7:5.5 processing_system7_0 ]
@@ -765,20 +765,6 @@ proc create_root_design { parentCell } {
   ] $processing_system7_0
 
 
-  # Create instance: btn_0, and set properties
-  set btn_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 btn_0 ]
-  set_property CONFIG.DIN_WIDTH {2} $btn_0
-
-
-  # Create instance: btn_1, and set properties
-  set btn_1 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 btn_1 ]
-  set_property -dict [list \
-    CONFIG.DIN_FROM {1} \
-    CONFIG.DIN_TO {1} \
-    CONFIG.DIN_WIDTH {2} \
-  ] $btn_1
-
-
   # Create instance: gates_wrapper_0, and set properties
   set block_name gates_wrapper
   set block_cell_name gates_wrapper_0
@@ -795,13 +781,10 @@ proc create_root_design { parentCell } {
   connect_bd_intf_net -intf_net processing_system7_0_FIXED_IO [get_bd_intf_ports FIXED_IO] [get_bd_intf_pins processing_system7_0/FIXED_IO]
 
   # Create port connections
-  connect_bd_net -net btn_0_Dout  [get_bd_pins btn_0/Dout] \
+  connect_bd_net -net btn0_1  [get_bd_ports btn0] \
   [get_bd_pins gates_wrapper_0/a]
-  connect_bd_net -net btn_1_Dout  [get_bd_pins btn_1/Dout] \
+  connect_bd_net -net btn1_1  [get_bd_ports btn1] \
   [get_bd_pins gates_wrapper_0/b]
-  connect_bd_net -net btn_2  [get_bd_ports btn] \
-  [get_bd_pins btn_0/Din] \
-  [get_bd_pins btn_1/Din]
   connect_bd_net -net gates_wrapper_0_y  [get_bd_pins gates_wrapper_0/y] \
   [get_bd_ports led]
 
