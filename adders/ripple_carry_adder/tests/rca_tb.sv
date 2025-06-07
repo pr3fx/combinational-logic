@@ -21,7 +21,7 @@ module rca_tb();
    // Apply test vectors
    always
      begin
-        #5; {cin, a, b, expected_s, expected_cout} = testvectors[vectornum]; #5;
+        {cin, a, b, expected_s, expected_cout} = testvectors[vectornum]; #5;
         // Check results
         if (s !== expected_s & cout !== expected_cout)
           begin
