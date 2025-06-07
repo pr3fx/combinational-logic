@@ -1,9 +1,9 @@
 module rca
   #(parameter width=8)
-   (input logic             cin,
-    input logic [width-1:0] a, b,
-    output logic [width:0]  s,
-    output logic            cout);
+   (input logic              cin,
+    input logic [width-1:0]  a, b,
+    output logic [width-1:0] s,
+    output logic             cout);
    
    logic [width-1:0] cout_int;
    genvar i;
