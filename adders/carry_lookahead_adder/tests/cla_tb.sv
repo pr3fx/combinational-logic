@@ -21,7 +21,7 @@ module cla_tb();
      begin
         // Read next test vector
         {cin, a, b, exp_s, exp_cout} = testvector[vectornum]; #5;
-        if (s !== exp_s & cout !== exp_cout)
+        if (s !== exp_s | cout !== exp_cout)
           begin
              $display("ERROR: inputs a=%b, b=%b, cin=%b produced incorrect", a, b, cin);
              $display("       outputs: s=%b (expected %b), cout=%b (expected %b)", s, exp_s, cout, exp_cout);
