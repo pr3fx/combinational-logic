@@ -9,10 +9,10 @@ module alu
    logic [width-1:0] B_add_sub, S;
    logic             cout;
 
-   assign B_add_sub  = B ? ALUCtrl[0] : ~B;
+   assign B_add_sub  = ALUCtrl[0] ? ~B : B;
 
    // Instantiate modules
-   cla adder(.a(A), .b(B_add_sub), .cin(ALUCtrl[0]), .s(S), .cout(cout));
+   cla #(width) adder(.a(A), .b(B_add_sub), .cin(ALUCtrl[0]), .s(S), .cout(cout));
 
    always_comb
      begin
@@ -25,13 +25,13 @@ module alu
         endcase // case (ALUCtrl)
      end
 
-   // Overflow flag
-   assign V = ~ALUCtrl[1] & (A[width-1] ^ S[width-1]) & ~(A[width-1] ^ B[width-1] ^ ALUCtrl[0]);
-   // Carry flag
-   assign C = cout & ~ALUCtrl[1];
-   // Negative flag
-   assign N = Result[width-1];
-   // Zero flag
-   assign Z = &(~Result);
+   // V Overflow flag
+   assign ALUFlags[3] = ~ALUCtrl[1] & (A[width-1] ^ S[width-1]) & ~(A[width-1] ^ B[width-1] ^ ALUCtrl[0]);
+   // C Carry flag
+   assign ALUFlags[2] = cout & ~ALUCtrl[1];
+   // N Negative flag
+   assign ALUFlags[1] = Result[width-1];
+   // Z Zero flag
+   assign ALUFlags[0] = &(~Result);
 
 endmodule // alu
