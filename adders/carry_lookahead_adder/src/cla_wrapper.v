@@ -1,5 +1,5 @@
 module cla_wrapper
-  #(parameter width=16)
+  #(parameter width=32)
    (input              cin,
     input [width-1:0]  a, b,
     output [width-1:0] s,
@@ -14,4 +14,3 @@ module cla_wrapper
              );
    
 endmodule // cla_wrapper
-
