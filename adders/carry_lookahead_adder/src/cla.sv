@@ -34,6 +34,6 @@ module cla
       end
    endgenerate
 
-   assign cout = blk_cout[i/4 - 1];
+   assign cout = blk_cout[width/4 - 1];
 
 endmodule // cla
